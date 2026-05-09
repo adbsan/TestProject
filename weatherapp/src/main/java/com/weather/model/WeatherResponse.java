@@ -1,0 +1,35 @@
+package com.weather.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
+import java.util.List;
+
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class WeatherResponse {
+
+    private String name;
+    private Main main;
+    private Wind wind;
+    private List<Weather> weather;
+
+    @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Main {
+        private double temp;
+        private int humidity;
+    }
+
+    @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Wind {
+        private double speed;
+    }
+
+    @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Weather {
+        private String description;
+        private String icon;
+    }
+}
