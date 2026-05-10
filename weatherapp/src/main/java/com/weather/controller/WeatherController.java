@@ -18,7 +18,7 @@ public class WeatherController {
 
     @GetMapping("/")
     public String index(
-            @RequestParam(value = "city", required = false) String city,
+            @RequestParam(required = false) String city,
             Model model) {
 
         if (city != null && !city.isBlank()) {
