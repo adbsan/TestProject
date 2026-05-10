@@ -1,9 +1,9 @@
 package com.weather.service;
 
+import com.weather.config.WeatherProperties;
 import com.weather.model.WeatherData;
 import com.weather.model.WeatherResponse;
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
@@ -12,19 +12,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Service
 public class WeatherService {
 
-    @Value("${weather.api.key}")
-    private String apiKey;
-
-    @Value("${weather.api.base-url}")
-    private String baseUrl;
-
-    @Value("${weather.api.units}")
-    private String units;
-
-    @Value("${weather.api.lang}")
-    private String lang;
-
+    private final WeatherProperties props;
     private RestClient restClient;
+
+    public WeatherService(WeatherProperties props) {
+        this.props = props;
+    }
 
     @PostConstruct
     public void init() {
@@ -32,11 +25,11 @@ public class WeatherService {
     }
 
     public WeatherData getWeather(String city) {
-        String url = UriComponentsBuilder.fromUriString(baseUrl)
+        String url = UriComponentsBuilder.fromUriString(props.getBaseUrl())
                 .queryParam("q", city)
-                .queryParam("appid", apiKey)
-                .queryParam("units", units)
-                .queryParam("lang", lang)
+                .queryParam("appid", props.getKey())
+                .queryParam("units", props.getUnits())
+                .queryParam("lang", props.getLang())
                 .toUriString();
 
         try {
