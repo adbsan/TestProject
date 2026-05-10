@@ -32,7 +32,7 @@ public class WeatherService {
     }
 
     public WeatherData getWeather(String city) {
-        String url = UriComponentsBuilder.fromHttpUrl(baseUrl)
+        String url = UriComponentsBuilder.fromUriString(baseUrl)
                 .queryParam("q", city)
                 .queryParam("appid", apiKey)
                 .queryParam("units", units)
